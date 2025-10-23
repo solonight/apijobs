@@ -22,5 +22,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Job creation endpoint (only for users with permission)
     Route::post('/jobs', [\App\Http\Controllers\JobController::class, 'store']);
-    Route::middleware('auth:sanctum')->post('/applications',[ApplicationController::class,'store']);
+    Route::post('/applications', [ApplicationController::class, 'store']);
 });
