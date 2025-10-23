@@ -15,5 +15,6 @@ class Job extends Model
         'title',
         'company',
         'location',
+        'user_id',
     ];
 }

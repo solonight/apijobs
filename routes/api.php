@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobController;
 
 // Public routes (no authentication required)
 Route::post('/register', [AuthController::class, 'register']);
@@ -21,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users/{user}/give-permissions', [UserController::class, 'givePermissions']);
 
     // Job creation endpoint (only for users with permission)
-    Route::post('/jobs', [\App\Http\Controllers\JobController::class, 'store']);
-    Route::post('/applications', [ApplicationController::class, 'store']);
+    Route::middleware('auth:sanctum')->post('/jobs', [JobController::class, 'store']);
+    Route::put('/jobs/{job}', [JobController::class, 'update']);
+    Route::delete('/jobs/{job}', [JobController::class, 'destroy']);
 });

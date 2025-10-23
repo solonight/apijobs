@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class RolesTableSeeder extends Seeder
 {
@@ -17,14 +18,25 @@ class RolesTableSeeder extends Seeder
         }
 
         // Create permissions
-        $permissions = ['create jobs'];
+        $permissions = ['create jobs', 'update jobs', 'delete jobs'];
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+            Permission::firstOrCreate([
+                'name' => $permission,
+                'guard_name' => 'web'
+            ]);
         }
 
-        // Assign 'create jobs' permission to employer
+        // Assign permissions AFTER they are created
+        DB::commit();
+
         $employerRole = Role::where('name', 'employer')->first();
-        $employerRole->givePermissionTo('create jobs');
+
+        foreach (['create jobs', 'update jobs', 'delete jobs'] as $perm) {
+            $permission = Permission::where('name', $perm)->where('guard_name', 'web')->first();
+            if ($permission) {
+                $employerRole->givePermissionTo($permission);
+            }
+        }
     }
 }
 
