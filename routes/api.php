@@ -1,0 +1,26 @@
+<?php
+
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+
+// Public routes (no authentication required)
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+// Protected routes (authentication required)
+Route::middleware('auth:sanctum')->group(function () {
+    // Auth routes
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+    
+    // User management routes
+    Route::apiResource('users', UserController::class);
+    Route::post('/users/{user}/assign-roles', [UserController::class, 'assignRoles']);
+    Route::post('/users/{user}/give-permissions', [UserController::class, 'givePermissions']);
+
+    // Job creation endpoint (only for users with permission)
+    Route::post('/jobs', [\App\Http\Controllers\JobController::class, 'store']);
+    Route::middleware('auth:sanctum')->post('/applications',[ApplicationController::class,'store']);
+});
