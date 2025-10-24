@@ -219,49 +219,26 @@
                 }
             }
         },
-        "/api/jobs": {
-            "post": {
+        "/api/user/jobs": {
+            "get": {
                 "tags": [
                     "Jobs"
                 ],
-                "summary": "Create a new job",
-                "description": "Creates a new job posting. Only employers with permission can create jobs.",
-                "operationId": "114092fca83ecbc834b6070229a2ebeb",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "company",
-                                    "location"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "type": "string"
-                                    },
-                                    "company": {
-                                        "type": "string"
-                                    },
-                                    "location": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
+                "summary": "User views all jobs",
+                "description": "Allows a user to view all available jobs.",
+                "operationId": "bd5c0c78b72220a20de9853ebd5395c3",
                 "responses": {
-                    "201": {
-                        "description": "Job created successfully",
+                    "200": {
+                        "description": "List of jobs",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "job": {
-                                            "$ref": "#/components/schemas/Job"
+                                        "jobs": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Job"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -287,14 +264,14 @@
                 }
             }
         },
-        "/api/jobs/{id}": {
-            "put": {
+        "/api/employer/jobs/{id}": {
+            "delete": {
                 "tags": [
                     "Jobs"
                 ],
-                "summary": "Update a job",
-                "description": "Update a job posting. Only the employer who owns the job can update it.",
-                "operationId": "6f578f9448379bc7d7ae246659468df7",
+                "summary": "Employer deletes their own job",
+                "description": "Allows an employer to delete a job they created.",
+                "operationId": "6c9c51b411460542a9d7c18a1cc6fd33",
                 "parameters": [
                     {
                         "name": "id",
@@ -306,36 +283,15 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "required": false,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "title": {
-                                        "type": "string"
-                                    },
-                                    "company": {
-                                        "type": "string"
-                                    },
-                                    "location": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
-                        "description": "Job updated successfully",
+                        "description": "Job deleted successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "job": {
-                                            "$ref": "#/components/schemas/Job"
+                                        "message": {
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
