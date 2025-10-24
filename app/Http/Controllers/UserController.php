@@ -6,13 +6,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+
 /**
+ * @OA\Info(
+ *     title="API Jobs Documentation",
+ *     version="1.0.0",
+ *     description="API documentation for the Jobs Laravel project."
+ * )
  * @OA\Tag(
  *     name="Users",
  *     description="API Endpoints for managing users"
  * )
  */
-// The above annotation groups all user-related endpoints under the "Users" tag in Swagger UI.
+// The above annotation provides required API info and groups user endpoints for Swagger.
 
 class UserController extends Controller
 {
