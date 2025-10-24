@@ -6,44 +6,26 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/applications": {
-            "post": {
+        "/api/employer/applications": {
+            "get": {
                 "tags": [
                     "Applications"
                 ],
-                "summary": "Create a new application",
-                "description": "Creates a new job application. Only users can apply.",
-                "operationId": "16015c06648502d08a2f5faad4b3f80e",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "job_id"
-                                ],
-                                "properties": {
-                                    "job_id": {
-                                        "type": "integer"
-                                    },
-                                    "cover_letter": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
+                "summary": "Get all job applications for jobs created by the employer",
+                "description": "Returns all job applications for jobs created by the authenticated employer.",
+                "operationId": "61b4f9eb85102144002e9526fac92e25",
                 "responses": {
-                    "201": {
-                        "description": "Application created successfully",
+                    "200": {
+                        "description": "List of job applications",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "application": {
-                                            "$ref": "#/components/schemas/Application"
+                                        "applications": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Application"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -52,7 +34,7 @@
                         }
                     },
                     "403": {
-                        "description": "Only users can apply",
+                        "description": "Unauthorized",
                         "content": {
                             "application/json": {
                                 "schema": {
