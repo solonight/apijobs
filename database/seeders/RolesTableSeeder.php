@@ -37,6 +37,9 @@ class RolesTableSeeder extends Seeder
                 $employerRole->givePermissionTo($permission);
             }
         }
+
+        $adminRole = Role::where('name', 'admin')->first();
+        $adminRole->syncPermissions(Permission::all());
     }
 }
 
