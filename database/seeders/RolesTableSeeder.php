@@ -18,7 +18,23 @@ class RolesTableSeeder extends Seeder
         }
 
         // Create permissions
-        $permissions = ['create jobs', 'update jobs', 'delete jobs'];
+        $permissions = [
+            'view-users',
+            'create-users',
+            'update-users',
+            'delete-users',
+            'assign-roles',
+            'view jobs',
+            'create jobs',
+            'update jobs',
+            'delete jobs'
+        ];
+        // Assign 'view jobs' permission to 'user' role
+        $userRole = Role::where('name', 'user')->first();
+        $viewJobsPermission = Permission::where('name', 'view jobs')->where('guard_name', 'web')->first();
+        if ($userRole && $viewJobsPermission) {
+            $userRole->givePermissionTo($viewJobsPermission);
+        }
         foreach ($permissions as $permission) {
             Permission::firstOrCreate([
                 'name' => $permission,

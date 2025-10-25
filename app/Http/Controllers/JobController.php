@@ -42,6 +42,35 @@ class JobController extends Controller
      * )
      */
     public function userViewJobs(Request $request)
+    /**
+     * @OA\Get(
+     *     path="/api/user/jobs",
+     *     tags={"Jobs"},
+     *     summary="Get all jobs for users",
+     *     description="Returns a list of all jobs. Only accessible by users with the 'user' role.",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="jobs",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Job")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string")
+     *         )
+     *     )
+     * )
+     */
     {
         $user = auth()->user();
         if (!$user->hasRole('user')) {

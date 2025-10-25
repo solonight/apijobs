@@ -149,6 +149,10 @@
                                         "type": "string",
                                         "format": "password"
                                     },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
                                     "role": {
                                         "type": "string",
                                         "enum": [

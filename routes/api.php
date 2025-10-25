@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('users', UserController::class);
     Route::post('/users/{user}/assign-roles', [UserController::class, 'assignRoles']);
     Route::post('/users/{user}/give-permissions', [UserController::class, 'givePermissions']);
-    Route::middleware('auth:sanctum')->delete('/users/{id}', [UserController::class, 'destroy']);
+    Route::middleware('auth:sanctum')->delete("/users/{id}", [UserController::class, 'destroy']);
 
     // Job creation endpoint (only for users with permission)
     Route::middleware('auth:sanctum')->post('/jobs', [JobController::class, 'store']);
