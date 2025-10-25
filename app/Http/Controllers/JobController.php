@@ -52,6 +52,46 @@ class JobController extends Controller
     }
 
     // ...existing code...
+            /**
+             * @OA\Put(
+             *     path="/api/jobs/{id}",
+             *     tags={"Jobs"},
+             *     summary="Update a job",
+             *     description="Update a job posting. Only the employer who owns the job can update it.",
+             *     security={{"bearerAuth":{}}},
+             *     @OA\Parameter(
+             *         name="id",
+             *         in="path",
+             *         required=true,
+             *         description="Job ID",
+             *         @OA\Schema(type="integer")
+             *     ),
+             *     @OA\RequestBody(
+             *         required=false,
+             *         @OA\JsonContent(
+             *             @OA\Property(property="title", type="string"),
+             *             @OA\Property(property="company", type="string"),
+             *             @OA\Property(property="location", type="string")
+             *         )
+             *     ),
+             *     @OA\Response(
+             *         response=200,
+             *         description="Job updated successfully",
+             *         @OA\JsonContent(
+             *             type="object",
+             *             @OA\Property(property="job", ref="#/components/schemas/Job")
+             *         )
+             *     ),
+             *     @OA\Response(
+             *         response=403,
+             *         description="Unauthorized",
+             *         @OA\JsonContent(
+             *             type="object",
+             *             @OA\Property(property="error", type="string")
+             *         )
+             *     )
+             * )
+             */
     public function update(Request $request, Job $job)
     {
         $user = auth()->user();

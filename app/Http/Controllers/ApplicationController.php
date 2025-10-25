@@ -15,6 +15,39 @@ use App\Models\Application;
 
 class ApplicationController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/api/applications",
+     *     tags={"Applications"},
+     *     summary="Create a new job application",
+     *     description="Creates a new job application. Only users can apply.",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"job_id"},
+     *             @OA\Property(property="job_id", type="integer"),
+     *             @OA\Property(property="cover_letter", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Application created successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="application", ref="#/components/schemas/Application")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Only users can apply",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string")
+     *         )
+     *     )
+     * )
+     */
     public function store(Request $request)
     {
         if (!auth()->user()->hasRole('user')) {
